@@ -1,0 +1,21 @@
+<?php
+$title = 'Dodaj nowego zawodnika';
+$this->headTitle($title);
+?>
+    <h1><?php echo $this->escapeHtml($title); ?></h1>
+<?php
+$form->setAttribute('action', $this->url('zawodnik', array('controller'=>'zawodnik','action' => 'dodaj')));
+$form->prepare();
+
+echo $this->form()->openTag($form);
+echo $this->formHidden($form->get('id'));
+echo $this->formRow($form->get('pseudonim'));
+echo '<br/>';
+echo $this->formRow($form->get('id_stylu_bazowego'));
+echo '<br/>';
+echo $this->formRow($form->get('id_kategorii_wagowej'));
+echo '<br/>';
+echo $this->formRow($form->get('id_lokalizacji'));
+echo '<br/>';
+echo $this->formSubmit($form->get('submit'));
+echo $this->form()->closeTag();

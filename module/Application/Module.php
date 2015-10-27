@@ -19,6 +19,17 @@ class Module
         $eventManager        = $e->getApplication()->getEventManager();
         $moduleRouteListener = new ModuleRouteListener();
         $moduleRouteListener->attach($eventManager);
+
+        $sm = $e->getApplication ()->getServiceManager ();
+        $zfcServiceEvents = $sm->get ( 'zfcuser_user_service' )->getEventManager ();
+
+
+        $zfcServiceEvents->attach ( 'register.post', function ($e) {
+            $form = $e->getParam('form');
+            $user = $e->getParam('user');
+            print_r($user);
+            exit();
+        });
     }
 
     public function getConfig()

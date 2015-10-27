@@ -1,6 +1,6 @@
 {
     "name": "zendframework/skeleton-application",
-    "description": "Skeleton Application for ZF2",
+    "description": "Symulacja gry",
     "license": "BSD-3-Clause",
     "keywords": [
         "framework",
@@ -9,6 +9,21 @@
     "homepage": "http://framework.zend.com/",
     "require": {
         "php": ">=5.5",
-        "zendframework/zendframework": "~2.5"
+        "zendframework/zendframework": "~2.5",
+        "doctrine/doctrine-orm-module": "*",
+        "phpspec/phpspec": "~2.1",
+        "goalio/goalio-forgotpassword": "1.0.2",
+        "zf-commons/zfc-user": "1.3.3"
+    },
+    "require-dev" : {
+        "behat/behat": "2.4.*@stable",
+        "behat/mink": "1.4@stable",
+        "behat/mink-extension": "*",
+        "behat/mink-goutte-driver": "*",
+        "behat/mink-selenium2-driver": "*",
+        "bossa/phpspec2-expect": "*"
+    },
+    "config": {
+        "bin-dir": "bin"
     }
 }
