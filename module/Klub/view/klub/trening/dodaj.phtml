@@ -1,0 +1,100 @@
+<?php
+$title = 'Rozpocznij trening';
+$this->headTitle($title);
+?>
+    <h1><?php echo $this->escapeHtml($title); ?></h1>
+
+<table border="0" align="center" width="80%" cellpadding='2' cellspacing='0'>
+    <tr>
+        <td>Rodzaj treningu</td>
+        <td>Zwiększane współczynniki</td>
+        <td>Okres regeneracji</td>
+    </tr>
+    <tr>
+        <td>Siłownia </td>
+        <td>Siła (+3 punkty) </td>
+        <td>2 dni </td>
+    </tr>
+    <tr>
+        <td>Crossfit </td>
+        <td>Eksplozywność (+3 punkty) i kondycja (+1 punkt) </td>
+        <td>1 dzień</td>
+    </tr>
+    <tr>
+        <td>Cardio </td>
+        <td>Kondycja (+3 punkty) </td>
+        <td>1 dzień</td>
+    </tr>
+    <tr>
+        <td>Techniczny/przekrojowy </td>
+        <td>Umiejętności i kondycja (+1 punkty) </td>
+        <td>4 godziny/max 3 dziennie </td>
+    </tr>
+
+    </table>
+<br/>
+<br/>
+<br/>
+<form method="POST">
+
+   <input type="hidden" name="id_zawodnika" value="<?php echo $id_zawodnika; ?>" />
+<table border="0" width="100%" cellpadding="5" cellspacing="0">
+    <tr>
+        <td align="right" width="30%">
+            Grupa treningu:
+        </td>
+        <td width="70%">
+            <select class="wojewodztwa" name="id_grupy_treningu" id="id_grupy_treningu">
+                <option class="text"  value="">-----</option>
+                <option class="text"  value="1">Wydolnościowo-siłowy</option>
+                <option class="text"  value="2">Techniczny</option>
+            </select>
+            <br/>
+            <span class="error"><?php echo $this->errors['idWojewodztwa'] ?></span>
+        </td>
+    </tr>
+    <tr>
+        <td align="right" width="30%">
+            Rodzaj treningu:
+        </td>
+        <td width="70%">
+            <select class="wojewodztwa" name="id_rodzaju_treningu" id="id_rodzaju_treningu">
+                <option class="text"  value="">-----</option>
+                <option class="text"  value="1">Trening przekrojowy MMA</option>
+                <option class="text"  value="2">BJJ</option>
+                <option class="text"  value="3">Zapasy</option>
+                <option class="text"  value="4">BOKS</option>
+                <option class="text"  value="4">MUAY THAI</option>
+            </select>
+            <br/>
+            <span class="error"><?php echo $this->errors['idWojewodztwa'] ?></span>
+        </td>
+    </tr>
+
+    <tr>
+        <td colspan="2" align="right">
+            <input type="submit" value="Rozpocznij trening" name="zatwierdz" class="submit"/>
+        </td>
+    </tr>
+</table>
+</form>
+<script type="text/javascript">
+    var top_url = '<?php echo $this->url('trening'); ?>';
+    $( "#id_grupy_treningu" ).change(function() {
+        var url_ajax = top_url+'/rodzaje/id_grupy_treningu/'+this.value;
+        $('#id_rodzaju_treningu option').remove();
+        $.ajax({
+            dataType: "json",
+            url: url_ajax,
+            success: function(request){
+                var i;
+                for (i = 0; i < request.length; i++) {
+                    d = request[i];
+                    $("#id_rodzaju_treningu").append("<option value=" + d.id + ">" + d.nazwa + "</option>");
+                }
+             }
+        });
+
+    });
+
+</script>

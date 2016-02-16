@@ -12,7 +12,7 @@ use Zend\Db\Adapter\AdapterInterface;
 
 class ZawodnikForm extends Form{
 
-    public function __construct(AdapterInterface $dbAdapter)
+    public function __construct(AdapterInterface $dbAdapter,\Klub\View\Helper\Stylebazowe $style)
     {
         $this->adapter =$dbAdapter;
         parent::__construct('zawodnik');
@@ -28,17 +28,21 @@ class ZawodnikForm extends Form{
                 'label' => 'Pseudonim',
             ),
         ));
+        $aLista = $style->pobierz();
 
-        $this->add(array(
-            'type' => 'Zend\Form\Element\Select',
-            'name' => 'id_stylu_bazowego',
-            'tabindex' =>2,
-            'options' => array(
-                'label' => 'Styl bazowy',
-                'empty_option' => 'Wybierz',
-                'value_options' => $this->getOptionsForSelect('s_style_bazowe;'),
+        $this->add(
+            array(
+                'type' => 'Zend\Form\Element\Radio',
+                'name' => 'id_stylu_bazowego',
+                'options' => array(
+                    'value_options' => $aLista,
+                ),
+                'attributes' => array(
+                    'id'=>"fcaptcha-id"
+                )
             )
-        ));
+        );
+
 
         $this->add(array(
             'type' => 'Zend\Form\Element\Select',
@@ -48,7 +52,7 @@ class ZawodnikForm extends Form{
                 'label' => 'Kategoria wagowa',
                 'empty_option' => 'Wybierz',
                 'value_options' =>  $this->getOptionsForSelect('s_kategorie_wagowe'),
-            )
+            ),
         ));
 
         $this->add(array(
@@ -58,8 +62,9 @@ class ZawodnikForm extends Form{
             'options' => array(
                 'label' => 'Lokalizacja',
                 'empty_option' => 'Wybierz',
-                'value_options' => $this->getOptionsForSelect('s_kategorie_wagowe'),
-            )
+                'value_options' => $this->getOptionsForSelect('lokalizacja_panstwa'),
+            ),
+
         ));
 
         $this->add(array(
@@ -80,7 +85,7 @@ class ZawodnikForm extends Form{
     private function getOptionsForSelect($sNazwa)
     {
         $dbAdapter = $this->adapter;
-        $sql       = 'SELECT id,nazwa  FROM '.$sNazwa.' where status=1 ORDER BY kolejnosc desc';
+        $sql       = 'SELECT id,nazwa  FROM '.$sNazwa.' where status=1 ORDER BY nazwa desc';
         $statement = $dbAdapter->query($sql);
         $result    = $statement->execute();
 

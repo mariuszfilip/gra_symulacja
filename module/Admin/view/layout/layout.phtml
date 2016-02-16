@@ -1,0 +1,57 @@
+<?php
+echo $this->doctype(); ?>
+<html>
+<head>
+    <title>Testfight</title>
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta name="author" content="">
+    <meta charset="utf-8">
+    <?php echo $this->headLink(array('rel' => 'shortcut icon', 'type' => 'image/vnd.microsoft.icon', 'href' => $this->basePath() . '/img/favicon.ico'))
+        ->prependStylesheet($this->basePath('css/style_nowy.css'))
+        ->prependStylesheet('//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css') ?>
+
+    <?php echo $this->headScript()
+        ->prependFile($this->basePath('js/menu.js'))
+        ->prependFile('//code.jquery.com/ui/1.11.4/jquery-ui.js')
+        ->prependFile($this->basePath('js/jquery.js'))
+    ?>
+
+</head>
+<body>
+<div class="container">
+    <div class="menu">
+        <ul>
+
+                <li><a href="<?php echo $this->url('home'); ?>">Strona główna</a></li>
+                <li><a href="<?php echo $this->url('taktyki',array('action'=>'lista')); ?>">Aktualności</a></li>
+                <li><a href="<?php echo $this->url('zfcuser/logout'); ?>" style="color: red">Wyloguj</a></li>
+        </ul>
+    </div>
+    <div class="logo">
+        <a href="<?php echo $this->url('home',array('action'=>'umiejetnosci')) ?>">
+            <img src="<?php echo  $this->basePath('img/logo.png') ?>" alt="TESTFIGHT" style="margin-left: 50px;"/>
+        </a>
+    </div>
+    <div class="admin">
+
+            <?php
+
+            if ($this->flashMessenger()->hasMessages()) {
+
+                echo '<div class="alert alert-info">';
+
+                $messages = $this->flashMessenger()->getMessages();
+                foreach($messages as $message) {
+                    echo $message;
+                }
+
+                echo '</div>';
+            }
+            ?>
+            <?php echo $this->content; ?>
+
+    </div>
+</div>
+</body>
+</html>

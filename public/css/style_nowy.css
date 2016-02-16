@@ -1,0 +1,346 @@
+body{
+    background: black;
+    margin: 0;
+    font-family: 'impact';
+}
+a{
+    outline: 0;
+    color: #3E151A;
+    text-decoration: none;
+}
+a:hover{
+    text-decoration: underline;
+}
+.container{
+    width: 1200px;
+    height: 1500px;
+    margin: auto;
+    background: url('../img/tlo.jpg') no-repeat;
+}
+.menu{
+    width: 100%;
+    background: black;
+    overflow: hidden;
+    background: url("../img/podmenu.png") no-repeat;
+}
+.menu ul{
+    list-style: none;
+    display: block;
+    margin: 0;
+    padding: 0;
+}
+.menu ul li{
+    float: left;
+    width: 121px;
+    text-align: center;
+    height: 35px;
+    line-height: 35px;
+    display: block;
+    margin-left: 11px;
+}
+.menu ul li ul{
+    display: block;
+    position: absolute;
+    background: #9F4A4A;
+    display: none;
+}
+.menu ul li:hover ul{
+    display: block;
+    background: #9F4A4A;
+}
+.menu ul li ul li{
+    width: 230px;
+}
+.menu ul li ul a{
+    background: none;
+    color: white;
+    padding-left: 70px;
+}
+.menu ul li ul a:hover, .menu ul li ul a.active{
+    color: black;
+}
+.menu ul li:nth-child(0){
+    margin-left: 0px;
+}
+.menu ul li a{
+    display: block;
+    background: #F4F4F4;
+    text-transform: uppercase;
+    color: black;
+    text-decoration: none;
+    font-size: 18px;
+    letter-spacing: 0px;
+}
+.menu ul li a:hover, .menu ul li a.active{
+    background: #9F4A4A;
+    color: white;
+}
+.logo{
+    height: 250px;
+    line-height: 300px;
+}
+.content{
+    width: 1000px;
+    height: 1100px;
+    margin: auto;
+    background: url('../img/tlo2.png') repeat;
+}
+.left{
+    width: 330px;
+    padding: 10px;
+    float: left;
+}
+.right{
+    float: left;
+    width: 630px;
+    padding: 10px;
+    height: 1080px;
+    background: url("../img/tlo3.png") repeat;
+}
+h1{
+    color: #3E151A;
+    font-size: 36px;
+    font-weight: bold;
+}
+h2{
+    color: white;
+    font-size: 24px;
+}
+.aktualnosci{
+    padding: 0;
+    margin: 0;
+}
+.aktualnosci li{
+    list-style: none;
+    
+}
+.aktualnosci li:before{
+    content: "• ";
+    color: white;
+}
+.aktualnosci li a{
+    color: white;
+    font-size: 18px;
+    text-decoration: none;
+    text-transform: uppercase;
+}
+.aktualnosci li a:hover{
+    
+}
+.post{
+    overflow: hidden;
+}
+.dodano{
+    color: #414141;
+}
+.dodano a{
+    color: #414141;
+    text-decoration: underline;
+}
+.dodano a:hover{
+    text-decoration: none;
+}
+.miniaturka{
+    margin-top: 10px;
+    width: 260px;
+    height: 250px;
+    float: left;
+}
+.info{
+    float: left;
+    margin-left: 10px;
+    width: 360px;
+    margin-top: 10px;
+}
+.zawodnikBox{
+    
+}
+.zawodnikBox .tytul{
+    background: url("../img/zawodnik.png") no-repeat;
+    width: 160px;
+    height: 50px;
+    color: white;
+    line-height: 50px;
+    padding-left: 10px;
+    padding-right: 10px;
+    font-size: 24px;
+}
+.submit{
+    background: #9F4A4A;
+    border: 0;
+    cursor: pointer;
+    padding: 10px;
+    font-family: 'impact';
+    font-size: 18px;
+    color: black;
+    letter-spacing: 1px;
+}
+.submit:hover{
+    color: white;
+}
+.rejestracja{
+    background: green;
+    border: 0;
+    cursor: pointer;
+    padding: 10px;
+    font-family: 'impact';
+    font-size: 18px;
+    color: black;
+    letter-spacing: 1px;
+}
+.rejestracja:hover{
+    color: white;
+}
+.text{
+    font-family: 'impact';
+    width: 200px;
+    height: 20px;
+    padding: 5px;
+    background: url("../img/input.png") repeat;
+    border: 1px gray solid;
+    color: white;
+    letter-spacing: 1px;
+    text-align: center;
+}
+.dalej{
+    font-size: 24px;
+    text-decoration: none;
+    color: black;
+}
+.error{
+    color: red;
+}
+.avatar{
+    text-align: center;
+}
+.avatar img{
+    overflow: hidden; 
+-moz-box-shadow: 10px 10px 5px #ccc; -webkit-box-shadow: 10px 10px 5px #ccc; -khtml-box-shadow: 10px 10px 5px #ccc;box-shadow: 10px 10px 5px #ccc;
+}
+.podavatar{
+    margin-top: 200px;
+}
+.center{
+    text-align: center;
+}
+.tlowalka{
+    background: url("../img/tlowalka.png") repeat;
+    padding: 5px;
+    margin-top: 5px;
+    overflow: hidden;
+}
+.naglowek{
+    text-transform: uppercase;
+    font-size: 30px;
+    color: white;
+    text-align: center;
+}
+.mainevent{
+    text-transform: uppercase;
+    color: #A4A4A4;
+    text-align: center;
+    font-size: 16px;
+    overflow: hidden;
+    margin-bottom: 10px;
+}
+.lewyzawodnik{
+    float: left;
+    color: white;
+    font-size: 18px;
+    width: 40%;
+    text-align: center;
+}
+.vs{
+    float: left;
+    width: 20%;
+    text-align: center;
+}
+.prawyzaweodnik{
+    float: left;
+    color: white;
+    font-size: 18px;
+    width: 40%;
+    text-align: center;
+}
+.plan_background{
+    background: white;
+    padding: 10px;
+    color: #595959;
+}
+.plan_background table{
+    font-size: 15px;
+}
+.plan_background td.dni{
+    background: #A86D6D;
+    color: white;
+}
+a.wstecz{
+    background: url("../img/wstecz.png") no-repeat;
+    display: block;
+    width: 7px;
+    height: 12px;
+    float: left;
+    padding: 3px;
+}
+a.dalej{
+    background: url("../img/dalej.png") no-repeat;
+    display: block;
+    width: 7px;
+    height: 12px;
+    float: left;
+    padding: 3px;
+}
+.pozostalo{
+    color: red;
+    font-weight: bold;
+}
+.ciemnetlo{
+    width: 80%;
+    background: url("../img/ciemnetlo.png") repeat;
+    padding: 10px;
+    margin: auto;
+    font-size: 12px;
+    font-weight: 100;
+    font-family: calibri;
+    color: white;
+}
+.wykrestlo{
+    width: 100%;
+    height: 15px;
+    background: white;
+    border: 1px black solid;
+    text-align: center;
+}
+.wykrestlo .procent{
+    width: 50%;
+    height: 100%;
+    background: #31850e;
+    color: black
+}
+
+select option{
+    font-family: 'impact';
+    width: 200px;
+    height: 20px;
+    padding: 5px;
+    background: url("../img/input.png") repeat;
+    border: 1px gray solid;
+    color: white;
+    letter-spacing: 1px;
+    text-align: center;
+}
+.label_dodaj_zawodnika{
+    float: left; width: 50%;
+}
+.suwak_taktyka{
+
+    border:0; font-weight:bold; text-align: center; background: none;
+}
+
+.admin{
+    background: rgba(0, 0, 0, 0) url("../img/tlo3.png") repeat scroll 0 0;
+    float: left;
+    height: 1080px;
+    padding: 10px;
+    width: 1000px;
+}

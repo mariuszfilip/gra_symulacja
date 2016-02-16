@@ -13,9 +13,6 @@ use Zend\InputFilter\InputFilterInterface;
 
 class ZawodnikFilter implements InputFilterAwareInterface
 {
-    public $id;
-    public $artist;
-    public $title;
     protected $inputFilter;                       // <-- Add this variable
 
 

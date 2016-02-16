@@ -1,0 +1,251 @@
+<?php
+$title = 'Walki';
+$this->headTitle($title);
+
+
+$aTaktyki = $this->taktyki();
+$aKlincz = $aTaktyki['klincz_grupy'];
+$aStojka = $aTaktyki['stojka_grupy'];
+$aParter = $aTaktyki['parter_grupy'];
+
+?>
+    <h1><?php echo $this->escapeHtml($title); ?></h1>
+
+
+<script type="text/javascript">
+    $(document).ready(function(){
+        $( "#progressbarOfensywa" ).progressbar({
+            value: resultOfensywa()
+        });
+
+        $( "#progressbarDefensywa" ).progressbar({
+            value: resultDefensywa()
+        });
+
+
+        $('.ofensywa').keypress(function(e){
+            if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57)) {
+                alert('Błędna wartość.');
+                return false;
+            }
+
+            var result=resultOfensywa();
+
+            if(result>100) $(this).css('color', 'red');
+            else $('.ofensywa').css('color', '');
+
+            $( "#progressbarOfensywa" ).progressbar({
+                value: result
+            });
+        });
+
+        $('.defensywa').keypress(function(e){
+            if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57)) {
+                alert('Błędna wartość.');
+                return false;
+            }
+
+            var result=resultDefensywa();
+
+            if(result>100) $(this).css('color', 'red');
+            else $('.defensywa').css('color', '');
+
+            $( "#progressbarDefensywa" ).progressbar({
+                value: result
+            });
+        });
+
+        $('.submit').click(function(){
+            if(resultOfensywa()>120 || resultDefensywa()>130){
+                alert('Wprowadzono błędne wartości. Należy poprawić formularz.');
+                return false;
+            }
+        });
+
+        function resultOfensywa(){
+            var Ofensywa=120;
+            var valOfensywa=0;
+            $('.ofensywa').each(function(){
+                valOfensywa+=parseInt($(this).val());
+            });
+
+            return (valOfensywa/Ofensywa)*100;
+        }
+
+        function resultDefensywa(){
+            var Defensywa=110;
+            var valDefensywa=0;
+            $('.defensywa').each(function(){
+                valDefensywa+=parseInt($(this).val());
+            });
+            return (valDefensywa/Defensywa)*100;
+        }
+
+
+    });
+
+</script>
+
+<script>
+    $(function() {
+
+        <?php foreach ($aStojka as $key => $aPoleKlincz) : ?>
+        $( ".slider_stojka_<?php echo $key ?>" ).slider({
+            value:<?php echo $form->get($aPoleKlincz[1]['name'])->getValue() > 0 ?$form->get($aPoleKlincz[1]['name'])->getValue():50 ?>,
+            min: 0,
+            max: 100,
+            step: 1,
+            slide: function( event, ui ) {
+                $( ".suwak<?php echo $aPoleKlincz[0]['id_suwaka'] ?>" ).val( (100-$( ".slider_stojka_<?php echo $key ?>" ).slider( "value" )));
+                $( ".suwak<?php echo $aPoleKlincz[1]['id_suwaka'] ?>" ).val( $( ".slider_stojka_<?php echo $key ?>" ).slider( "value" ) );
+            }
+        });
+        $( ".suwak<?php echo $aPoleKlincz[0]['id_suwaka'] ?>" ).val( (100-$( ".slider_stojka_<?php echo $key ?>" ).slider( "value" )));
+        $( ".suwak<?php echo $aPoleKlincz[1]['id_suwaka'] ?>" ).val( $( ".slider_stojka_<?php echo $key ?>" ).slider( "value" ) );
+        <?php endforeach ?>
+
+        <?php foreach ($aParter as $key => $aPoleKlincz) : ?>
+        $( ".slider_parter_<?php echo $key ?>" ).slider({
+            value:<?php echo $form->get($aPoleKlincz[1]['name'])->getValue() > 0 ?$form->get($aPoleKlincz[1]['name'])->getValue():50 ?>,
+            min: 0,
+            max: 100,
+            step: 1,
+            slide: function( event, ui ) {
+                $( ".suwak<?php echo $aPoleKlincz[0]['id_suwaka'] ?>" ).val( (100-$( ".slider_parter_<?php echo $key ?>" ).slider( "value" )));
+                $( ".suwak<?php echo $aPoleKlincz[1]['id_suwaka'] ?>" ).val( $( ".slider_parter_<?php echo $key ?>" ).slider( "value" ) );
+            }
+        });
+        $( ".suwak<?php echo $aPoleKlincz[0]['id_suwaka'] ?>" ).val( (100-$( ".slider_parter_<?php echo $key ?>" ).slider( "value" )));
+        $( ".suwak<?php echo $aPoleKlincz[1]['id_suwaka'] ?>" ).val( $( ".slider_parter_<?php echo $key ?>" ).slider( "value" ) );
+        <?php endforeach ?>
+
+        <?php foreach ($aKlincz as $key => $aPoleKlincz) : ?>
+        $( ".slider_klincz_<?php echo $key ?>" ).slider({
+            value:<?php echo $form->get($aPoleKlincz[1]['name'])->getValue() > 0 ?$form->get($aPoleKlincz[1]['name'])->getValue():50 ?>,
+            min: 0,
+            max: 100,
+            step: 1,
+            slide: function( event, ui ) {
+                $( ".suwak<?php echo $aPoleKlincz[0]['id_suwaka'] ?>" ).val( (100-$( ".slider_klincz_<?php echo $key ?>" ).slider( "value" )));
+                $( ".suwak<?php echo $aPoleKlincz[1]['id_suwaka'] ?>" ).val( $( ".slider_klincz_<?php echo $key ?>" ).slider( "value" ) );
+            }
+        });
+        $( ".suwak<?php echo $aPoleKlincz[0]['id_suwaka'] ?>" ).val( (100-$( ".slider_klincz_<?php echo $key ?>" ).slider( "value" )));
+        $( ".suwak<?php echo $aPoleKlincz[1]['id_suwaka'] ?>" ).val( $( ".slider_klincz_<?php echo $key ?>" ).slider( "value" ) );
+        <?php endforeach ?>
+
+    });
+</script>
+<form action="" method="post">
+
+    <?php echo $this->formHidden($form->get('id_taktyki')) ?>
+    <?php echo $this->formHidden($form->get('id_taktyki_stojka')) ?>
+    <?php echo $this->formHidden($form->get('id_taktyki_parter')) ?>
+    <?php echo $this->formHidden($form->get('id_taktyki_klincz')) ?>
+
+    <table border="0" width="100%" cellpadding="5" cellspacing="0">
+    <tr>
+        <td align="right" width="30%">
+            <?php echo $this->formLabel($form->get('nazwa')) ?>
+        </td>
+        <td width="70%">
+            <?php echo $this->formInput($form->get('nazwa')) ?>
+            <br/>
+            <span class="error"><?php echo $this->formElementErrors($form->get('nazwa')) ?></span>
+        </td>
+    </tr>
+     </table>
+    <div style="height: 500px; overflow-y: scroll">
+        <center><b>Walka w stójce</b></center>
+        <table border="0" width="80%" align="center" cellpadding="3" cellspacing="0">
+            <?php foreach ($aStojka as $key => $aPoleKlincz) : ?>
+                <tr>
+                    <td><?php echo $this->formLabel($form->get($aPoleKlincz[0]['name'])) ?></td>
+                    <td>
+                        <div class="slider_stojka_<?php echo $key ?>"></div>
+                        <div style="float: left"><?php echo $this->formInput($form->get($aPoleKlincz[0]['name'])) ?>%</div>
+                        <div style="float: right"><?php echo $this->formInput($form->get($aPoleKlincz[1]['name'])) ?>%</div>
+                    </td>
+                    <td><?php echo $this->formLabel($form->get($aPoleKlincz[1]['name'])) ?></td>
+                </tr>
+            <?php endforeach ?>
+        </table>
+        <br/>
+        <center><b>Walka w parterze</b></center>
+        <table border="0" width="80%" align="center" cellpadding="3" cellspacing="0">
+            <?php foreach ($aParter as $key => $aPoleKlincz) : ?>
+                <tr>
+                    <td><?php echo $this->formLabel($form->get($aPoleKlincz[0]['name'])) ?></td>
+                    <td>
+                        <div class="slider_parter_<?php echo $key ?>"></div>
+                        <div style="float: left"><?php echo $this->formInput($form->get($aPoleKlincz[0]['name'])) ?>%</div>
+                        <div style="float: right"><?php echo $this->formInput($form->get($aPoleKlincz[1]['name'])) ?>%</div>
+                    </td>
+                    <td><?php echo $this->formLabel($form->get($aPoleKlincz[1]['name'])) ?></td>
+                </tr>
+            <?php endforeach ?>
+        </table>
+        <br/>
+        <center><b>Klincz</b></center>
+        <table border="0" width="80%" align="center" cellpadding="3" cellspacing="0">
+            <?php foreach ($aKlincz as $key => $aPoleKlincz) : ?>
+            <tr>
+                <td><?php echo $this->formLabel($form->get($aPoleKlincz[0]['name'])) ?></td>
+                <td>
+                    <div class="slider_klincz_<?php echo $key ?>"></div>
+                    <div style="float: left"><?php echo $this->formInput($form->get($aPoleKlincz[0]['name'])) ?>%</div>
+                    <div style="float: right"><?php echo $this->formInput($form->get($aPoleKlincz[1]['name'])) ?>%</div>
+                </td>
+                <td><?php echo $this->formLabel($form->get($aPoleKlincz[1]['name'])) ?></td>
+            </tr>
+            <?php endforeach ?>
+        </table>
+    </div>
+    <br/>
+    <center>
+        <b>Reakcja na akcje przeciwnika</b>
+        <br/>
+        <table border="0" width="80%" align="center" cellpadding="5" cellspacing="0">
+            <tr>
+                <td>
+                        <?php echo $this->formcheckbox($form->get('pozwol_klinczowac'));
+                        echo $this->formLabel($form->get('pozwol_klinczowac'));
+                        ?>
+                </td>
+                <td>
+                    <?php echo $this->formcheckbox($form->get('pozwol_na_obalenie'));
+                    echo $this->formLabel($form->get('pozwol_na_obalenie'));
+                    ?>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <?php echo $this->formcheckbox($form->get('pozwol_zerwac'));
+                    echo $this->formLabel($form->get('pozwol_zerwac'));
+                    ?>
+                </td>
+                <td>
+                    <?php echo $this->formcheckbox($form->get('zostan_stojka'));
+                    echo $this->formLabel($form->get('zostan_stojka'));
+                    ?>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <?php echo $this->formcheckbox($form->get('obalenia_po_ciosie'));
+                    echo $this->formLabel($form->get('obalenia_po_ciosie'));
+                    ?>
+                </td>
+                <td>
+                    <?php echo $this->formcheckbox($form->get('uderzenia_po_ciosie'));
+                    echo $this->formLabel($form->get('uderzenia_po_ciosie'));
+                    ?>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="4" align="right"><input class="submit" type="submit" value="Zapisz taktykę" name="Walcz"/></td>
+            </tr>
+        </table>
+    </center>
+
+</form>

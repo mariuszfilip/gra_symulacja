@@ -15,7 +15,7 @@ return array(
             'klub' => array(
                 'type' => 'Zend\Mvc\Router\Http\Segment',
                 'options' => array(
-                    'route' => '/klub[/:action]',
+                    'route' => '/klub[/:action][/:id_zawodnika]',
                     'constraints' => array(
                         'action' => '[a-zA-Z][a-zA-Z0-9_-]*'
                     ),
@@ -39,12 +39,36 @@ return array(
             'zawodnik' => array(
                 'type' => 'Zend\Mvc\Router\Http\Segment',
                 'options' => array(
-                    'route' => '/zawodnik[/:action]',
+                    'route' => '/zawodnik[/:action][/:id_zawodnika]',
                     'constraints' => array(
                         'action' => '[a-zA-Z][a-zA-Z0-9_-]*'
                     ),
                     'defaults' => array(
                         'controller' => 'Klub\Controller\Zawodnik',
+                        'action' => 'index',
+                    ),
+                ),
+                'may_terminate' => true,
+                'child_routes' => array(
+                    'wildcard' => array(
+                        'type' => 'Zend\Mvc\Router\Http\Wildcard',
+                        'options' => array(
+                            'key_value_delimiter' => '/',
+                            'param_delimiter' => '/',
+                        ),
+                        'may_terminate' => true,
+                    ),
+                ),
+            ),
+            'trening' => array(
+                'type' => 'Zend\Mvc\Router\Http\Segment',
+                'options' => array(
+                    'route' => '/trening[/:action][/:id_zawodnika][/:id_grupy_treningu]',
+                    'constraints' => array(
+                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*'
+                    ),
+                    'defaults' => array(
+                        'controller' => 'Klub\Controller\Trening',
                         'action' => 'index',
                     ),
                 ),
@@ -69,7 +93,14 @@ return array(
         ),
         'factories' => array(
             'translator' => 'Zend\Mvc\Service\TranslatorServiceFactory',
-            'Klub\Repository\ZawodnikRepository'  => 'Klub\Repository\ZawodnikRepository'
+            'Klub\Repository\ZawodnikRepository'  => 'Klub\Repository\ZawodnikRepository',
+            'Klub\StyleBazowe' => function($sm){
+                return new \Klub\View\Helper\Stylebazowe();
+            },
+            'Klub\RodzajeTreningow' => function($sm){
+
+                return new \Klub\Service\RodzajeTreningow($sm->get('Zend\Db\Adapter\Adapter'));
+            }
         ),
     ),
     'controllers' => array(
@@ -77,12 +108,16 @@ return array(
             'Klub\Controller\Index' => Controller\IndexController::class,
         ),
         'factories'=> array(
-            'Klub\Controller\Zawodnik' => 'Klub\Controller\Service\ZawodnikControllerFactory'
+            'Klub\Controller\Zawodnik' => 'Klub\Controller\Service\ZawodnikControllerFactory',
+            'Klub\Controller\Trening' => 'Klub\Controller\Service\TreningControllerFactory'
         )
     ),
     'view_manager' => array(
         'template_path_stack' => array(
             __DIR__ . '/../view',
+        ),
+        'strategies' => array(
+            'ViewJsonStrategy',
         ),
     ),
     // Placeholder for console routes
@@ -106,6 +141,14 @@ return array(
                 )
             )
         )
-    )
+    ),
+    'view_helpers' => array(
+        'factories' => array(
+            'stylebazowe' => function(\Zend\View\HelperPluginManager $sm){
+                $styleBazowe = $sm->getServiceLocator()->get('Klub\StyleBazowe');
+                return $styleBazowe;
+            }
+        ),
+    ),
 
 );

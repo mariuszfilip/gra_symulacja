@@ -1,0 +1,27 @@
+<?php
+$title = 'Lista zapisanych taktyk';
+$this->headTitle($title);
+
+
+$aTaktyki = $this->lista_taktyk;
+
+?>
+    <h1><?php echo $this->escapeHtml($title); ?></h1>
+
+<h4><a href="<?php echo $this->url('taktyki',array('action'=>'zarzadzaj')); ?>">Dodaj taktykę (dodać blokadę)</a></h4>
+<table>
+
+    <?php foreach ($aTaktyki as $item) : ?>
+<tr>
+    <td align="right" width="30%">
+        <?php echo $item->pobierzNazwa() ?>
+    </td>
+    <td align="right" width="30%">
+        <?php echo $item->pobierzDataDodania() ?>
+    </td>
+    <td width="40%">
+        <a href="<?php echo $this->url('taktyki',array('action'=>'zarzadzaj','id_taktyki'=>$item->pobierzIdTaktyki())); ?>">Edytuj</a>
+    </td>
+</tr>
+    <? endforeach ?>
+</table>

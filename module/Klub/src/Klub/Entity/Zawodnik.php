@@ -13,62 +13,85 @@ use Doctrine\ORM\Mapping\Table as Table;
 use Doctrine\ORM\Mapping\Id as Id;
 use Doctrine\ORM\Mapping\GeneratedValue as GeneratedValue;
 use Doctrine\ORM\Mapping\Column as Column;
+use Klub\Entity\Atrybuty;
 
 /**
  * @Entity
  * @Table(name="zawodnik")
  * @ORM\Entity(repositoryClass="Klub\Repository\ZawodnikRepository")
  */
-class Zawodnik{
+class Zawodnik extends EntityAbstract{
 
     /**
      * @Id @Column(type="integer")
      * @GeneratedValue(strategy="AUTO")
      */
-    private $id_zawodnika;
+    protected $id_zawodnika;
 
 
     /**
      * @Column(type="string")
      */
-    private $pseudonim;
+    protected $pseudonim;
 
 
     /**
      * @Column(type="integer")
      */
-    private $id_kategorii_wagowej;
+    protected $id_kategorii_wagowej;
 
 
     /**
      * @Column(type="integer")
      */
-    private $id_stylu_bazowego;
+    protected $id_stylu_bazowego;
 
     /**
      * @Column(type="integer")
      */
-    private $id_lokalizacji;
+    protected $id_lokalizacji;
 
 
     /**
      * @Column(type="integer");
      */
-    private $wzrost;
+    protected $wzrost;
 
 
     /**
      * @Column(type="date")
      */
-    private $data_urodzenia;
+    protected $data_urodzenia;
 
 
     /**
      * @Column(type="datetime")
      */
-    private $data_dodania;
+    protected $data_dodania;
+
+    /**
+     * @Column(type="integer")
+     */
+    protected $id_uzytkownika =0;
+
+    /**
+     * @ORM\OneToOne(targetEntity="Klub\Entity\Atrybuty")
+     * @ORM\JoinColumn(name="id_zawodnika", referencedColumnName="id_zawodnika")
+     **/
+    protected $atrybuty;
+
+    /**
+     * @ORM\OneToOne(targetEntity="Klub\Entity\UmiejetnosciOfensywne")
+     * @ORM\JoinColumn(name="id_zawodnika", referencedColumnName="id_zawodnika")
+     **/
+    protected $umiejetnosci_of;
 
 
+    /**
+     * @ORM\OneToOne(targetEntity="Klub\Entity\UmiejetnosciDefensywne")
+     * @ORM\JoinColumn(name="id_zawodnika", referencedColumnName="id_zawodnika")
+     **/
+    protected $umiejetnosc_def;
 
     /**
      * @return mixed
@@ -151,6 +174,72 @@ class Zawodnik{
         $this->data_urodzenia = $data_urodzenia;
     }
 
+    /**
+     * @return mixed
+     */
+    public function pobierzIdUzytkownika()
+    {
+        return $this->id_uzytkownika;
+    }
+
+    /**
+     * @param mixed $id_uzytkownika
+     */
+    public function ustawIdUzytkownika($id_uzytkownika)
+    {
+        $this->id_uzytkownika = $id_uzytkownika;
+    }
+
+    /**
+     * @return Atrybuty
+     */
+    public function pobierzAtrybuty()
+    {
+        return $this->atrybuty;
+    }
+
+    /**
+     * @param mixed $atrybuty
+     */
+    public function ustawAtrybuty($atrybuty)
+    {
+        $this->atrybuty = $atrybuty;
+    }
+
+    /**
+     * @return UmiejetnosciOfensywne
+     */
+    public function pobierzUmiejetnosciOf()
+    {
+        return $this->umiejetnosci_of;
+    }
+
+    /**
+     * @param mixed $umiejetnosci_of
+     */
+    public function ustawUmiejetnosciOf($umiejetnosci_of)
+    {
+        $this->umiejetnosci_of = $umiejetnosci_of;
+    }
+
+    /**
+     * @return UmiejetnosciDefensywne
+     */
+    public function pobierzUmiejetnoscDef()
+    {
+        return $this->umiejetnosc_def;
+    }
+
+    /**
+     * @param mixed $umiejetnosc_def
+     */
+    public function ustawUmiejetnoscDef($umiejetnosc_def)
+    {
+        $this->umiejetnosc_def = $umiejetnosc_def;
+    }
+
+
+
 
     /**
      * @param $data
@@ -163,7 +252,7 @@ class Zawodnik{
         $this->id_kategorii_wagowej = (isset($data['id_kategorii_wagowej'])) ? $data['id_kategorii_wagowej'] : null;
         $this->id_stylu_bazowego = (isset($data['id_stylu_bazowego'])) ? $data['id_stylu_bazowego'] : null;
         $this->id_lokalizacji = (isset($data['id_lokalizacji'])) ? $data['id_lokalizacji'] : null;
-        $this->wzrost = (isset($data['wzrost'])) ? $data['wzrost'] : 100;
+        $this->wzrost = rand(160,210);
         $this->data_dodania = new \DateTime("NOW");
         $this->data_urodzenia = $oDate->modify('- 18 years');
 

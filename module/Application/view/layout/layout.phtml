@@ -1,55 +1,111 @@
-<?php echo $this->doctype(); ?>
+<?php
+echo $this->doctype(); ?>
+<html>
+<head>
+    <title>Testfight</title>
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta name="author" content="">
+    <meta charset="utf-8">
+    <?php echo $this->headLink(array('rel' => 'shortcut icon', 'type' => 'image/vnd.microsoft.icon', 'href' => $this->basePath() . '/img/favicon.ico'))
+        ->prependStylesheet($this->basePath('css/style_nowy.css'))
+        ->prependStylesheet('//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css') ?>
 
-<html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <?php echo $this->headTitle('ZF2 '. $this->translate('Skeleton Application'))->setSeparator(' - ')->setAutoEscape(false) ?>
+    <?php echo $this->headScript()
+        ->prependFile($this->basePath('js/menu.js'))
+        ->prependFile('//code.jquery.com/ui/1.11.4/jquery-ui.js')
+        ->prependFile($this->basePath('js/jquery.js'))
+    ?>
 
-        <?php echo $this->headMeta()
-            ->appendName('viewport', 'width=device-width, initial-scale=1.0')
-            ->appendHttpEquiv('X-UA-Compatible', 'IE=edge')
-        ?>
+</head>
+<body>
+<div class="container">
+    <div class="menu">
+        <ul>
+            <?php if($this->zfcUserIdentity()): ?>
 
-        <!-- Le styles -->
-        <?php echo $this->headLink(array('rel' => 'shortcut icon', 'type' => 'image/vnd.microsoft.icon', 'href' => $this->basePath() . '/img/favicon.ico'))
-                        ->prependStylesheet($this->basePath('css/style.css'))
-                        ->prependStylesheet($this->basePath('css/bootstrap-theme.min.css'))
-                        ->prependStylesheet($this->basePath('css/bootstrap.min.css')) ?>
-
-        <!-- Scripts -->
-        <?php echo $this->headScript()
-            ->prependFile($this->basePath('js/bootstrap.min.js'))
-            ->prependFile($this->basePath('js/jquery.min.js'))
-            ->prependFile($this->basePath('js/respond.min.js'), 'text/javascript', array('conditional' => 'lt IE 9',))
-            ->prependFile($this->basePath('js/html5shiv.min.js'),   'text/javascript', array('conditional' => 'lt IE 9',))
-        ; ?>
-
-    </head>
-    <body>
-        <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-            <div class="container">
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    <a class="navbar-brand" href="<?php echo $this->url('home') ?>"><img src="<?php echo $this->basePath('img/zf2-logo.png') ?>" alt="Zend Framework 2"/>&nbsp;<?php echo $this->translate('Skeleton Application') ?></a>
-                </div>
-                <div class="collapse navbar-collapse">
-                    <ul class="nav navbar-nav">
-                        <li class="active"><a href="<?php echo $this->url('home') ?>"><?php echo $this->translate('Home') ?></a></li>
+                <li><a href="<?php echo $this->url('home'); ?>">Strona główna</a></li>
+                <li><a href="#">Zawodnicy</a>
+                    <ul>
+                        <li><a href="<?php echo $this->url('zawodnik'); ?>">Lista</a></li>
                     </ul>
-                </div><!--/.nav-collapse -->
-            </div>
-        </nav>
-        <div class="container">
+                </li>
+                <li><a href="<?php echo $this->url('taktyki',array('action'=>'lista')); ?>">Taktyka</a>
+                </li>
+                <li><a href="#">Federacja</a></li>
+                <li><a href="#">Wiadomości</a></li>
+                <li><a href="#">Czat</a></li>
+                <li><a href="<?php echo $this->url('zfcuser/logout'); ?>" style="color: red">Wyloguj</a></li>
+            <?php else: ?>
+                <li><a href="<?php echo $this->url('home'); ?>">Strona główna</a></li>
+                <li><a href="<?php echo $this->url('zawodnik'); ?>">Zawodnik</a>
+                    <ul>
+                        <li><a href="<?php echo $this->url('zawodnik',array('action'=>'umiejetnosci')); ?>">Umiejętności</a></li>
+                    </ul>
+                </li>
+                <li><a href="#">Trening</a>
+                    <ul>
+                        <li><a href="<?php echo $this->url('zawodnik'); ?>">Plan treningowy</a></li>
+                    </ul>
+                </li>
+                <li><a href="#">Federacja</a></li>
+                <li><a href="#">Wiadomości</a></li>
+                <li><a href="#">Czat</a></li>
+                <li><a href="<?php echo $this->url('zfcuser'); ?>">Zaloguj</a>
+                    <ul>
+                        <li><a href="<?php echo $this->url('zfcuser/register'); ?>">Rejestracja</a></li>
+                    </ul>
+                </li>
+                <li><a href="#">Sklep</a></li>
+            <?php endif; ?>
+        </ul>
+    </div>
+    <div class="logo">
+        <a href="<?php echo $this->url('home',array('action'=>'umiejetnosci')) ?>">
+            <img src="<?php echo  $this->basePath('img/logo.png') ?>" alt="TESTFIGHT" style="margin-left: 50px;"/>
+        </a>
+    </div>
+    <div class="content">
+            <div class="left">
+                <?php if($this->zfcUserIdentity()): ?>
+                    <div class="avatar">
+                        <img src="<?php echo $this->basePath('img/avatary/1.PNG') ?>" />
+                    </div>
+                      <br/>
+                         <center>
+                        Witaj, <a href="#">Mariusz Filipkowski</a>
+                        </center>
+
+                <?php endif; ?>
+                <h2>Ostatnio zamieszczone</h2>
+                <ul class="aktualnosci">
+                    <li><a href="">Lorem ipsum dolor sit amet</a></li>
+                    <li><a href="">Lorem ipsum dolor sit amet</a></li>
+                    <li><a href="">Lorem ipsum dolor sit amet</a></li>
+                    <li><a href="">Lorem ipsum dolor sit amet</a></li>
+                    <li><a href="">Lorem ipsum dolor sit amet</a></li>
+                    <li><a href="">Lorem ipsum dolor sit amet</a></li>
+                </ul>
+
+        </div>
+        <div class="right">
+            <?php
+
+            if ($this->flashMessenger()->hasMessages()) {
+
+                echo '<div class="alert alert-info">';
+
+                $messages = $this->flashMessenger()->getMessages();
+                foreach($messages as $message) {
+                    echo $message;
+                }
+
+                echo '</div>';
+            }
+            ?>
             <?php echo $this->content; ?>
-            <hr>
-            <footer>
-                <p>&copy; 2005 - <?php echo date('Y') ?> by Zend Technologies Ltd. <?php echo $this->translate('All rights reserved.') ?></p>
-            </footer>
-        </div> <!-- /container -->
-        <?php echo $this->inlineScript() ?>
-    </body>
+        </div>
+    </div>
+</div>
+</body>
 </html>

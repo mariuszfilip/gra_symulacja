@@ -1,0 +1,266 @@
+
+<?php
+    /*
+     * @var \Klub\Enitity\Zawodnik $zawodnik
+     */
+    $zawodnik = $this->zawodnik[0];
+
+  ?>
+
+<h1>Umiejętności</h1>
+<br/>
+<div class="ciemnetlo">
+    <table border="0" align="center" width="80%" cellpadding='2' cellspacing='0'>
+
+        <?php
+        $stojka_kopniecia = $zawodnik->pobierzUmiejetnosciOf()->pobierzStojkaKopniecia();
+        $stojka_kolana = $zawodnik->pobierzUmiejetnosciOf()->pobierzStojkaKolana();
+        $stojka_klincz = $zawodnik->pobierzUmiejetnosciOf()->pobierzStojkaKlincz();
+        $stojka_obalenia = $zawodnik->pobierzUmiejetnosciOf()->pobierzStojkaObalenia();
+        $stojka_uderzenia = $zawodnik->pobierzUmiejetnosciOf()->pobierzStojkaUderzenia();
+        $parter_groundpound = $zawodnik->pobierzUmiejetnosciOf()->pobierzParterGroundpound();
+        $parter_submission = $zawodnik->pobierzUmiejetnosciOf()->pobierzParterSubmission();
+        ?>
+        <tr>
+            <td></td>
+            <td><b><u>Ofensywa</u></b></td>
+        </tr>
+        <tr>
+            <td width='40%' align='right'>
+                Uderzenia
+            </td>
+            <td width='60%'>
+                <div class='wykrestlo'>
+                    <div class='procent' style='width: <?php echo $stojka_uderzenia ?>%'><?php echo $stojka_uderzenia ?>%</div>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td width='40%' align='right'>
+                Kopnięcia
+            </td>
+            <td width='60%'>
+                <div class='wykrestlo'>
+                    <div class='procent' style='width: <?php echo $stojka_kopniecia ?>%'><?php echo $stojka_kopniecia ?>%</div>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td width='40%' align='right'>
+                Kolana
+            </td>
+            <td width='60%'>
+                <div class='wykrestlo'>
+                    <div class='procent' style='width: <?php echo $stojka_kolana ?>%'><?php echo $stojka_kolana ?>%</div>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td width='40%' align='right'>
+                Klincz
+            </td>
+            <td width='60%'>
+                <div class='wykrestlo'>
+                    <div class='procent' style='width: <?php echo $stojka_klincz ?>%'><?php echo $stojka_klincz ?>%</div>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td width='40%' align='right'>
+                Obalenia
+            </td>
+            <td width='60%'>
+                <div class='wykrestlo'>
+                    <div class='procent' style='width: <?php echo $stojka_obalenia ?>%'><?php echo $stojka_obalenia ?>%</div>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td width='40%' align='right'>
+                Ground&Pound
+            </td>
+            <td width='60%'>
+                <div class='wykrestlo'>
+                    <div class='procent' style='width: <?php echo $parter_groundpound ?>%'><?php echo $parter_groundpound ?>%</div>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td width='40%' align='right'>
+                Submission
+            </td>
+            <td width='60%'>
+                <div class='wykrestlo'>
+                    <div class='procent' style='width: <?php echo $parter_submission ?>%'><?php echo $parter_submission ?>%</div>
+                </div>
+            </td>
+        </tr>
+        <?php
+        $stojka_obrona = $zawodnik->pobierzUmiejetnoscDef()->pobierzStojkaObrona();
+        $stojka_obrona_przed_obaleniami = $zawodnik->pobierzUmiejetnoscDef()->pobierzStojkaObronaPrzedObaleniami();
+        $stojka_klincz = $zawodnik->pobierzUmiejetnoscDef()->pobierzStojkaKlincz();
+        $stojka_kontratak = $zawodnik->pobierzUmiejetnoscDef()->pobierzStojkaKontratak();
+        $parter_def_grapping = $zawodnik->pobierzUmiejetnoscDef()->pobierzParterDefGrapping();
+
+        ?>
+        <tr>
+            <td></td>
+            <td><b><u>Defensywa</u></b></td>
+        </tr>
+        <tr>
+            <td width='40%' align='right'>
+                Obrona
+            </td>
+            <td width='60%'>
+                <div class='wykrestlo'>
+                    <div class='procent' style='width: <?php echo $stojka_obrona ?>%'><?php echo $stojka_obrona ?>%</div>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td width='40%' align='right'>
+                Obrona przed obaleniem
+            </td>
+            <td width='60%'>
+                <div class='wykrestlo'>
+                    <div class='procent' style='width: <?php echo $stojka_obrona_przed_obaleniami ?>%'><?php echo $stojka_obrona_przed_obaleniami ?>%</div>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td width='40%' align='right'>
+                Grappling
+            </td>
+            <td width='60%'>
+                <div class='wykrestlo'>
+                    <div class='procent' style='width: <?php echo $parter_def_grapping ?>%'><?php echo $parter_def_grapping ?>%</div>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td width='40%' align='right'>
+                Klincz
+            </td>
+            <td width='60%'>
+                <div class='wykrestlo'>
+                    <div class='procent' style='width: <?php echo $stojka_klincz ?>%'><?php echo $stojka_klincz ?>%</div>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td width='40%' align='right'>
+                Kontratak
+            </td>
+            <td width='60%'>
+                <div class='wykrestlo'>
+                    <div class='procent' style='width: <?php echo $stojka_kontratak ?>%'><?php echo $stojka_kontratak ?>%</div>
+                </div>
+            </td>
+        </tr>
+
+
+        <?php
+        $sila = $zawodnik->pobierzAtrybuty()->pobierzSila();
+        $zrecznosc = $zawodnik->pobierzAtrybuty()->pobierzZrecznosc();
+        $eksplozywnosc = $zawodnik->pobierzAtrybuty()->pobierzEksplozywnosc();
+        $balans = $zawodnik->pobierzAtrybuty()->pobierzBalans();
+        $kondycja = $zawodnik->pobierzAtrybuty()->pobierzKondycja();
+        $zdrowie = $zawodnik->pobierzAtrybuty()->pobierzZdrowie();
+        ?>
+        
+        <tr>
+            <td></td>
+            <td><b><u>Atrybuty</u></b></td>
+        </tr>
+        <tr>
+            <td width='40%' align='right'>
+                Zdrowie
+            </td>
+            <td width='60%'>
+                <div class='wykrestlo'>
+                    <div class='procent' style='width: <?php echo $zdrowie ?>%'><?php echo $zdrowie ?>%</div>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td width='40%' align='right'>
+                Psychika
+            </td>
+            <td width='60%'>
+                <div class='wykrestlo'>
+                    <div class='procent' style='width: 0%'>0%</div>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td width='40%' align='right'>
+                Siła
+            </td>
+            <td width='60%'>
+                <div class='wykrestlo'>
+                    <div class='procent' style='width:  <?php echo $sila ?>%'> <?php echo $sila ?>%</div>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td width='40%' align='right'>
+                Kondycja
+            </td>
+            <td width='60%'>
+                <div class='wykrestlo'>
+                    <div class='procent' style='width:  <?php echo $kondycja ?>%'> <?php echo $kondycja ?>%</div>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td width='40%' align='right'>
+                Zręczność
+            </td>
+            <td width='60%'>
+                <div class='wykrestlo'>
+                    <div class='procent' style='width:  <?php echo $zrecznosc ?>%'> <?php echo $zrecznosc ?>%</div>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td width='40%' align='right'>
+                Siła w stójce
+            </td>
+            <td width='60%'>
+                <div class='wykrestlo'>
+                    <div class='procent' style='width: <?php echo $sila ?>%'><?php echo $sila ?>%</div>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td width='40%' align='right'>
+                Kondycja w stójce
+            </td>
+            <td width='60%'>
+                <div class='wykrestlo'>
+                    <div class='procent' style='width: <?php echo $kondycja ?>%'><?php echo $kondycja ?>%</div>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td width='40%' align='right'>
+                Balans w stójce
+            </td>
+            <td width='60%'>
+                <div class='wykrestlo'>
+                    <div class='procent' style='width: <?php echo $balans ?>%'><?php echo $balans ?>%</div>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td width='40%' align='right'>
+                Eksplozywność w stójce
+            </td>
+            <td width='60%'>
+                <div class='wykrestlo'>
+                    <div class='procent' style='width: <?php echo $eksplozywnosc ?>%'><?php echo $eksplozywnosc ?>%</div>
+                </div>
+            </td>
+        </tr>
+    </table>
+</div>

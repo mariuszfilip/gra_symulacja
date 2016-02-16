@@ -1,1 +1,31 @@
-lista zawodników
+<h1>Lista</h1>
+<br/>
+<div class="ciemnetlo">
+
+
+    <h4><a href="<?php echo $this->url('zawodnik',array('action'=>'dodaj')); ?>">Dodaj zawodnika (dodać blokadę)</a></h4>
+
+    <table border="0" align="center" width="80%" cellpadding='2' cellspacing='0'>
+        <tr>
+            <td>Pseudonim</td>
+            <td></td>
+            <td></td>
+        </tr>
+
+
+
+
+<?php
+
+foreach ($this->zawodnicy as $item) {
+    echo '<tr>';
+    echo '<td>'.$item->pobierzPseudonim().'</td>';
+    ?>
+    <td><a href="<?php echo $this->url('trening',array('action'=>'dodaj','id_zawodnika'=>$item->pobierzIdZawodnika())); ?>">Trening</a></td>
+    <td><a href="<?php echo $this->url('zawodnik',array('action'=>'umiejetnosci','id_zawodnika'=>$item->pobierzIdZawodnika())); ?>">Umiejętności</a></td>
+    <?
+}
+
+?>
+
+    </table>

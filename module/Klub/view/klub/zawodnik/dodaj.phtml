@@ -6,16 +6,78 @@ $this->headTitle($title);
 <?php
 $form->setAttribute('action', $this->url('zawodnik', array('controller'=>'zawodnik','action' => 'dodaj')));
 $form->prepare();
+?>
+    <table border="0" width="100%" cellpadding="5" cellspacing="0">
+<?php
 
 echo $this->form()->openTag($form);
 echo $this->formHidden($form->get('id'));
-echo $this->formRow($form->get('pseudonim'));
-echo '<br/>';
-echo $this->formRow($form->get('id_stylu_bazowego'));
-echo '<br/>';
-echo $this->formRow($form->get('id_kategorii_wagowej'));
-echo '<br/>';
-echo $this->formRow($form->get('id_lokalizacji'));
-echo '<br/>';
-echo $this->formSubmit($form->get('submit'));
+
+?>
+        <tr>
+            <td align="right" width="30%">
+                <?php echo $this->formLabel($form->get('pseudonim')) ?>
+            </td>
+            <td width="70%">
+                <?php echo $this->formInput($form->get('pseudonim')) ?>
+                <br/>
+                <span class="error"><?php echo $this->formElementErrors($form->get('pseudonim')) ?></span>
+            </td>
+        </tr>
+
+        <tr>
+            <td align="right" width="30%">
+                Styl bazowy:
+            </td>
+            <td width="70%">
+                <?php echo $this->formRadio($form->get('id_stylu_bazowego')) ?>
+                <br/>
+                <span class="error"><?php echo $this->formElementErrors($form->get('id_stylu_bazowego')) ?></span>
+            </td>
+        </tr>
+
+        <tr>
+            <td align="right" width="30%">
+                <?php echo $this->formLabel($form->get('id_kategorii_wagowej')) ?>
+            </td>
+            <td width="70%">
+                <?php echo $this->formSelect($form->get('id_kategorii_wagowej')) ?>
+                <br/>
+                <span class="error"><?php echo $this->formElementErrors($form->get('id_kategorii_wagowej')) ?></span>
+            </td>
+        </tr>
+        <tr>
+            <td align="right" width="30%">
+                <?php echo $this->formLabel($form->get('id_lokalizacji')) ?>
+            </td>
+            <td width="70%">
+                <?php echo $this->formSelect($form->get('id_lokalizacji')) ?>
+                <br/>
+                <span class="error"><?php echo $this->formElementErrors($form->get('id_lokalizacji')) ?></span>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2" align="right">
+                <input type="submit" value="Zapisz zawodnika" name="zatwierdz" class="submit"/>
+            </td>
+        </tr>
+        <?php
 echo $this->form()->closeTag();
+
+?>
+
+    </table>
+
+
+
+<script>
+    $(document).ready(function(){
+        <?php
+             $aStyleBazowe = $this->stylebazowe();
+             foreach($aStyleBazowe as $key=>$miniaturka):
+                echo ' $( \'#option'.$miniaturka['id'].'\' ).append( \' <img  src="'.$this->basePath('img/stylewalki/'.$miniaturka['plik']).'"/>\' );';
+             endforeach;
+             ?>
+    });
+</script>
+

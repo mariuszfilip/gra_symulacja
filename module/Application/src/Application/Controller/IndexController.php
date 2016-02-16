@@ -9,6 +9,7 @@
 
 namespace Application\Controller;
 
+use View\Helper\Miniaturkihelper;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 
@@ -16,6 +17,7 @@ class IndexController extends AbstractActionController
 {
     public function indexAction()
     {
+        //new Miniaturkihelper();
         return new ViewModel();
     }
 }

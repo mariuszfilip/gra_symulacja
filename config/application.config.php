@@ -15,7 +15,9 @@ return array(
         'GoalioForgotPassword',
         'GoalioMailService',
         'Application',
-        'Klub'
+        'Klub',
+        'Walki',
+        'Admin'
     ),
 
     // These are various options for the listeners attached to the ModuleManager

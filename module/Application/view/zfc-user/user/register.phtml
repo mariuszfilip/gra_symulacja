@@ -1,4 +1,4 @@
-<h1><?php echo $this->translate('Register'); ?></h1>
+<h1>Rejestracja</h1>
 
 <?php
 if (!$this->enableRegistration) {
@@ -13,21 +13,100 @@ $form->setAttribute('autocomplete', 'off');
 ?>
 
 <?php echo $this->form()->openTag($form) ?>
-    <dl class="zend_form">
-    <?php foreach ($form as $element): ?>
-        <?php if (!$element instanceof Zend\Form\Element\Button): ?>
-            <dt><?php echo $this->formLabel($element) ?></dt>
-        <?php endif ?>
-        <?php if ($element instanceof Zend\Form\Element\Button): ?>
-            <dd><?php echo $this->formButton($element) ?></dd>
-        <?php elseif ($element instanceof Zend\Form\Element\Captcha): ?>
-            <dd><?php echo $this->formCaptcha($element) . $this->formElementErrors($element) ?></dd>
-        <?php else: ?>
-            <dd><?php echo $this->formInput($element) . $this->formElementErrors($element) ?></dd>
-        <?php endif ?>
-    <?php endforeach ?>
-    </dl>
+
+    <table border="0" width="100%" cellpadding="5" cellspacing="0">
+        <tr>
+            <td align="right" width="30%">
+                Nazwa użytkownika
+            </td>
+            <td width="70%">
+                <?php echo $this->formInput($form->get('username')) ?>
+                <br/>
+                <span class="error"><?php echo $this->formElementErrors($form->get('username')) ?></span>
+            </td>
+        </tr>
+        <tr>
+            <td align="right" width="30%">
+                <?php echo $this->formLabel($form->get('email')) ?>
+            </td>
+            <td width="70%">
+                <?php echo $this->formInput($form->get('email')) ?>
+                <br/>
+                <span class="error"><?php echo $this->formElementErrors($form->get('email')) ?></span>
+            </td>
+        </tr>
+        <tr>
+            <td align="right" width="30%">
+                Hasło:
+            </td>
+            <td width="70%">
+                <?php echo $this->formInput($form->get('password')) ?>
+                <br/>
+                <span class="error"><?php echo $this->formElementErrors($form->get('password')) ?></span>
+            </td>
+        </tr>
+        <tr>
+            <td align="right" width="30%">
+                Hasło ponownie:
+            </td>
+            <td width="70%">
+                <?php echo $this->formInput($form->get('passwordVerify')) ?>
+                <br/>
+                <span class="error"><?php echo $this->formElementErrors($form->get('passwordVerify')) ?></span>
+            </td>
+        </tr>
+        <tr>
+            <td align="right" width="30%">
+                Adres:
+            </td>
+            <td width="70%">
+                <?php echo $this->formTextarea($form->get('adres')) ?>
+                <br/>
+                <span class="error"><?php echo $this->formElementErrors($form->get('adres')) ?></span>
+            </td>
+        </tr>
+        <tr>
+            <td align="right" width="30%">
+                Numer telefonu:
+            </td>
+            <td width="70%">
+                <?php echo $this->formInput($form->get('numer_telefonu')) ?>
+                <br/>
+                <span class="error"><?php echo $this->formElementErrors($form->get('numer_telefonu')) ?></span>
+            </td>
+        </tr>
+
+        <tr>
+            <td align="right" width="30%">
+                Miniaturka:
+            </td>
+            <td width="70%">
+                <?php echo $this->formRadio($form->get('id_minaturki')) ?>
+                <br/>
+                <span class="error"><?php echo $this->formElementErrors($form->get('id_minaturki')) ?></span>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2" align="right">
+                <input type="submit" value="Zatwierdź krok" name="zatwierdz" class="submit"/>
+            </td>
+        </tr>
+
+
     <?php if ($this->redirect): ?>
         <input type="hidden" name="redirect" value="<?php echo $this->escapeHtml($this->redirect) ?>" />
     <?php endif ?>
+</table>
 <?php echo $this->form()->closeTag() ?>
+
+
+<script>
+    $(document).ready(function(){
+        <?php
+             $aMiniatorki = $this->miniatorki();
+             foreach($aMiniatorki as $key=>$miniaturka):
+                echo ' $( \'#option'.$miniaturka['id'].'\' ).append( \' <img src="'.$this->basePath('img/avatary/'.$miniaturka['plik']).'"/>\' );';
+             endforeach;
+             ?>
+    });
+</script>

@@ -61,6 +61,17 @@ return array(
         ),
         'factories' => array(
             'translator' => 'Zend\Mvc\Service\TranslatorServiceFactory',
+            'Zend\Log\Logger' => function($sm){
+                $logger = new \Zend\Log\Logger;
+                $writer = new \Zend\Log\Writer\Stream('./data/log/'.date('Y-m-d').'-error.log');
+
+                $logger->addWriter($writer);
+
+                return $logger;
+            },
+            'Rejestracja\Miniaturki' => function($sm){
+                return new \Application\View\Helper\Miniaturkihelper;
+            }
         ),
     ),
     'translator' => array(
@@ -116,5 +127,13 @@ return array(
                 )
             )
         )
-    )
+    ),
+    'view_helpers' => array(
+        'factories' => array(
+            'miniatorki' => function(\Zend\View\HelperPluginManager $sm){
+                $rejestracja = $sm->getServiceLocator()->get('Rejestracja\Miniaturki');
+                return $rejestracja;
+            }
+        ),
+    ),
 );

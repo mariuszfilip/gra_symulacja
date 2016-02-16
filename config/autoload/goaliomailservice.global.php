@@ -22,8 +22,8 @@ $settings = array(
         'connection_class' => 'login',
         'connection_config' => array(
             'ssl' => 'tls',
-            'username' => 'mariusz24245@gmail.com',
-            'password' => 'Mariusz242425@'
+            'username' => 'test@gmail.com',
+            'password' => 'test'
         ),
         'port' => 587
     )

@@ -11,7 +11,6 @@ namespace Klub\Controller;
 
 use Klub\Form\ZawodnikFilter;
 use Zend\Mvc\Controller\AbstractActionController;
-use Zend\View\Model\ViewModel;
 use Klub\Form\ZawodnikForm;
 use Klub\Entity\Zawodnik;
 use Klub\Repository\ZawodnikRepository;
@@ -29,16 +28,37 @@ class ZawodnikController extends AbstractActionController
             $this->_service = $service;
     }
 
+    private function czyMozliweDodanieZawodnika(){
+        $limit = 2; // Todo to bedzie brane z ustawien , obecnie ograniczenie domyslne
+        if($this->_service->pobierzIlosc($this->zfcUserAuthentication()->getIdentity()->getId()) <= $limit){
+            return true;
+        }
+        return false;
+    }
+
     public function indexAction()
     {
-        return new ViewModel();
+        try{
+            $aZawodnicy = $this->_service->pobierzZawodnikowUzytkownika($this->zfcUserAuthentication()->getIdentity()->getId());
+
+
+        }catch (\Exception $e){
+            var_dump($e->getMessage());
+        }
+        return array('zawodnicy'=>$aZawodnicy);
     }
 
     public function dodajAction()
     {
+        if(!$this->czyMozliweDodanieZawodnika()){
+            $this->flashMessenger()->addMessage('Brak możliwości dodania zawodnika. Limit został osiągnięty!');
+            return $this->redirect()->toRoute('zawodnik');
+        }
         try{
             $dbAdapter = $this->getServiceLocator()->get('Zend\Db\Adapter\Adapter');
-            $oFormZawodnik = new ZawodnikForm($dbAdapter);
+            $style = $this->getServiceLocator()->get('Klub\StyleBazowe');
+
+            $oFormZawodnik = new ZawodnikForm($dbAdapter,$style);
             $oFormZawodnikFilter = new ZawodnikFilter();
 
             $request = $this->getRequest();
@@ -49,10 +69,9 @@ class ZawodnikController extends AbstractActionController
 
                 if ($oFormZawodnik->isValid()) {
                     $zawodnik->exchangeArray($oFormZawodnik->getData());
-
+                    $zawodnik->ustawIdUzytkownika($this->zfcUserAuthentication()->getIdentity()->getId());
                     $this->_service->dodajZawodnika($zawodnik);
-
-                    // Redirect to list of albums
+                    $this->flashMessenger()->addMessage('Zawodnik '.$zawodnik->pobierzPseudonim().' został dodany.');
                     return $this->redirect()->toRoute('zawodnik');
                 }
             }
@@ -61,5 +80,11 @@ class ZawodnikController extends AbstractActionController
         }
         return array('form' => $oFormZawodnik);
 
+    }
+    public function umiejetnosciAction(){
+        $id_zawodnika = $this->getEvent()->getRouteMatch()->getParam('id_zawodnika',null);
+
+        $oZawodnicy = $this->_service->pobierzZawodnika($id_zawodnika);
+        return array('zawodnik' => $oZawodnicy, 'flashMessages' => $this->flashMessenger()->getMessages());
     }
 }

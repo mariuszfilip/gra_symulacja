@@ -11,25 +11,102 @@ namespace Application;
 
 use Zend\Mvc\ModuleRouteListener;
 use Zend\Mvc\MvcEvent;
+use  Zend\ModuleManager\Feature\ViewHelperProviderInterface;
 
-class Module
+class Module implements
+    ViewHelperProviderInterface
+
 {
-    public function onBootstrap(MvcEvent $e)
+
+
+        public function onBootstrap(MvcEvent $e)
     {
+        $sharedManager = $e->getApplication()->getEventManager()->getSharedManager();
         $eventManager        = $e->getApplication()->getEventManager();
         $moduleRouteListener = new ModuleRouteListener();
         $moduleRouteListener->attach($eventManager);
 
         $sm = $e->getApplication ()->getServiceManager ();
-        $zfcServiceEvents = $sm->get ( 'zfcuser_user_service' )->getEventManager ();
 
 
-        $zfcServiceEvents->attach ( 'register.post', function ($e) {
+        $sharedManager->attach('Zend\Mvc\Application', 'dispatch.error',  function($e) use ($sm) {
+                if ($e->getParam('exception')){
+                    $sm->get('Zend\Log\Logger')->crit($e->getParam('exception'));
+                }
+            }
+        );
+        $sharedEvents = $eventManager->getSharedManager();
+
+        $sharedEvents->attach('ZfcUser\Form\Register',
+            'init',
+            function ($e) use ($sm){
+                /* @var $form \ZfcUser\Form\Register */
+                $form = $e->getTarget();
+
+                $form->add(
+                    array(
+                        'name' => 'adres',
+                        'type' => 'text',
+                        'options' => array(
+                            'label' => 'Adres',
+                        ),
+                    )
+                );
+
+                $form->add(
+                    array(
+                        'name' => 'numer_telefonu',
+                        'type' => 'text',
+                        'options' => array(
+                            'label' => 'Numer telefonu',
+                        ),
+                    )
+                );
+                $miniaturki = $sm->get('Rejestracja\Miniaturki');
+                $aLista = $miniaturki->pobierz();
+
+                $form->add(
+                    array(
+                        'type' => 'Zend\Form\Element\Radio',
+                        'name' => 'id_minaturki',
+                        'options' => array(
+                            'value_options' => $aLista,
+                        ),
+                        'attributes' => array(
+                            'id'=>"fcaptcha-id"
+                        )
+                    )
+                );
+
+            }
+        );
+
+        // Validators for custom fields
+        $sharedEvents->attach('ZfcUser\Form\RegisterFilter',
+            'init',
+            function ($e) {
+                /* @var $form \ZfcUser\Form\RegisterFilter */
+                $filter = $e->getTarget();
+
+                $filter->add(array(
+                    'name'     => 'id_minaturki',
+                    'required' => true,
+                ));
+
+
+            }
+        );
+        $zfcServiceEvents = $e->getApplication()->getServiceManager()->get('zfcuser_user_service')->getEventManager();
+        $zfcServiceEvents->attach('register', function($e) {
             $form = $e->getParam('form');
             $user = $e->getParam('user');
-            print_r($user);
-            exit();
+
+            /* @var $user Application\Entity\User */
+            $user->setAddress( $form->get('adres')->getValue() );
+            $user->setNumberPhone( $form->get('numer_telefonu')->getValue() );
         });
+
+
     }
 
     public function getConfig()
@@ -46,5 +123,10 @@ class Module
                 ),
             ),
         );
+    }
+
+    public function getViewHelperConfig()
+    {
+
     }
 }

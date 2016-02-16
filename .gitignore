@@ -9,3 +9,7 @@ nbproject
 .settings
 vendor
 composer.phar
+config/autoload/zfcuser.global.php
+config/autoload/local.php
+config/autoload/goaliomailservice.global.php
+config/autoload/goalioforgotpassword.global.php
